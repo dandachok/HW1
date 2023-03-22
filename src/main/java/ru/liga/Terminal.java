@@ -4,12 +4,11 @@ import lombok.val;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Terminal {
-    private final Map<String, String> cdx  = new HashMap<String, String>() {{
+    private final Map<String, String> cdx  = new HashMap<>() {{
         put("USD", "Доллар США");
         put("TRY", "Турецкая лира");
         put("EVR", "Евро");
@@ -25,7 +24,7 @@ public class Terminal {
         // Reading data using readLine
         try {
             String str = reader.readLine();
-            if (str == null) {
+            if (str == null || str.equals("exit")) {
                 return new Command("", "exit");
             }
             val line = Arrays.asList(str.split(" "));
@@ -41,6 +40,19 @@ public class Terminal {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void printUsage() {
+        System.out.println("""
+                Команды:
+                \trate {USD,TRY,EVR} {tomorrow, week} - прогноз валюты
+                \t\tUSD - Доллар США
+                \t\tTRY - Турецкая лира
+                \t\tEVR - Евро
+                \t\ttomorrow - на завтра
+                \t\tweek - на неделю
+                \texit - закрыть программу
+                """);
     }
 
     public void printPrediction(List<Curs> curses) {

@@ -3,7 +3,6 @@ package ru.liga;
 import lombok.val;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class App {
@@ -11,7 +10,9 @@ public class App {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(System.in));
         Terminal terminal = new Terminal(reader);
-        Predicter predicter = new Predicter();
+        Predictor predictor = new Predictor();
+
+        terminal.printUsage();
 
         while(true) {
 
@@ -20,7 +21,7 @@ public class App {
                 break;
             }
             if (command.isCorrect()) {
-                terminal.printPrediction(predicter.getPredict(command));
+                terminal.printPrediction(predictor.getPredict(command));
             }
         }
 

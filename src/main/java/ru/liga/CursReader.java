@@ -2,35 +2,19 @@ package ru.liga;
 
 import lombok.val;
 
-import java.io.*;
-import java.text.ParseException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class CursReader {
-    private final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-    Curs read() {
-
-        try (InputStream inputStream = getClass().getResourceAsStream("/dollar_evro_lira.csv");
-             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            reader.readLine();
-            val line = Arrays.asList(reader.readLine().split(";"));
-            return new Curs(Integer.parseInt(line.get(0)),
-                    LocalDate.parse(line.get(1), DateTimeFormatter.ofPattern("MM/dd/yyyy", new Locale("ru"))),
-                    Double.parseDouble(line.get(2)),
-                    line.get(3));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 
     List<Curs> read(int count, String cdx) {
         List<Curs> curses = new ArrayList<>();

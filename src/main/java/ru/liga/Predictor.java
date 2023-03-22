@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Predicter {
+public class Predictor {
     private final CursReader reader = new CursReader();
     List<Curs> getPredict(Command command) {
 
