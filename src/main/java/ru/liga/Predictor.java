@@ -7,16 +7,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Predictor {
+
+    private static final Integer SAMPLING_SIZE = 7;
+
     private final CursReader reader = new CursReader();
+
     List<Curs> getPredict(Command command) {
 
-        val curses = reader.read(7, command.getCxd());
+        val curses = reader.read(SAMPLING_SIZE, command.getCxd());
         List<Curs> result = new ArrayList<>();
-        if (command.getRate().equals("tomorrow")) {
+        if ("tomorrow".equals(command.getCommand())) {
             result.add(new Curs(1, LocalDate.now().plusDays(1), avr(curses), command.getCxd()));
             return result;
         }
-        for (int i = 0; i < 7; ++i) {
+        for (int i = 0; i < SAMPLING_SIZE; ++i) {
             result.add(new Curs(1, LocalDate.now().plusDays(i + 1), avr(curses), command.getCxd()));
             curses.set(i, result.get(i));
         }

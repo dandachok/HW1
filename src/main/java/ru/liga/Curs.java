@@ -7,11 +7,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 public class Curs {
-    private Integer nominal;
+    private final Integer nominal;
 
-    private LocalDate data;
+    private final LocalDate data;
 
-    private Double curs;
+    private final Double curs;
 
-    private String cdx;
+    private final String cdx;
 }

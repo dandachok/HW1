@@ -6,15 +6,34 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class Command {
+
+    private static final String INCORRECT = "incorrect";
+
+    private static final String EXIT = "exit";
+
+
+
     private final String cxd;
 
-    private final String rate;
+    private final String command;
+
+    Command(String command) {
+        cxd = "";
+        this.command = command;
+    }
+    public static Command getIncorrect() {
+        return new Command(INCORRECT);
+    }
+
+    public static Command getExit() {
+        return new Command(EXIT);
+    }
 
     public Boolean isCorrect() {
-        return !rate.equals("incorrect");
+        return !command.equals(INCORRECT);
     }
 
     public boolean isExit() {
-        return rate.equals("exit");
+        return command.equals(EXIT);
     }
 }

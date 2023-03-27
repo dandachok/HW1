@@ -8,33 +8,50 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Terminal {
-    private final Map<String, String> cdx  = new HashMap<>() {{
+    private static final Map<String, String> cdx = new HashMap<>() {{
         put("USD", "Доллар США");
         put("TRY", "Турецкая лира");
         put("EVR", "Евро");
     }};
 
+    private static final String USAGE = """
+            Команды:
+            \trate {USD,TRY,EVR} {tomorrow, week} - прогноз валюты
+            \t\tUSD - Доллар США
+            \t\tTRY - Турецкая лира
+            \t\tEVR - Евро
+            \t\ttomorrow - на завтра
+            \t\tweek - на неделю
+            \texit - закрыть программу
+            """;
+    private static final String RATE = "rate";
+    private static final String WEEK = "week";
+    private static final String TOMORROW = "tomorrow";
+    private static final DateTimeFormatter formatter = DateTimeFormatter
+            .ofPattern("E dd,MM,yyyy", new Locale("ru"));
     private final BufferedReader reader;
 
     Terminal(BufferedReader reader) {
         this.reader = reader;
     }
+
     public Command getCommand() {
 
         // Reading data using readLine
         try {
             String str = reader.readLine();
-            if (str == null || str.equals("exit")) {
-                return new Command("", "exit");
+            if (str == null || "exit".equals(str)) {
+                return Command.getExit();
             }
+
             val line = Arrays.asList(str.split(" "));
             if (line.size() != 3
-                    || !line.get(0).equals("rate")
+                    || ! RATE.equals(line.get(0))
                     || !cdx.containsKey(line.get(1))
-                    || (!line.get(2).equals("week")
-                    && !line.get(2).equals("tomorrow"))) {
+                    || (!WEEK.equals(line.get(2))
+                    && !TOMORROW.equals(line.get(2)))) {
                 System.out.println("Incorrect command");
-                return new Command("", "incorrect");
+                return Command.getIncorrect();
             }
             return new Command(cdx.get(line.get(1)), line.get(2));
         } catch (IOException e) {
@@ -43,21 +60,12 @@ public class Terminal {
     }
 
     public void printUsage() {
-        System.out.println("""
-                Команды:
-                \trate {USD,TRY,EVR} {tomorrow, week} - прогноз валюты
-                \t\tUSD - Доллар США
-                \t\tTRY - Турецкая лира
-                \t\tEVR - Евро
-                \t\ttomorrow - на завтра
-                \t\tweek - на неделю
-                \texit - закрыть программу
-                """);
+        System.out.println(USAGE);
     }
 
     public void printPrediction(List<Curs> curses) {
         for (val curs : curses) {
-            System.out.println(curs.getData().format(DateTimeFormatter.ofPattern("E dd,MM,yyyy", new Locale("ru"))) + " - " + curs.getCurs());
+            System.out.println(curs.getData().format(formatter) + " - " + curs.getCurs());
         }
     }
 }
