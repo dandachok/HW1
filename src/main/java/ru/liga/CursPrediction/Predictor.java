@@ -1,7 +1,9 @@
-package ru.liga;
+package ru.liga.CursPrediction;
 
 import lombok.val;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +29,9 @@ public class Predictor {
         return result;
     }
 
-    private double avr(List<Curs> curses) {
+    private BigDecimal avr(List<Curs> curses) {
         return curses.stream()
-                .map(x -> x.getCurs() / x.getNominal())
-                .reduce(0., Double::sum) / curses.size();
+                .map(Curs::getCurs)
+                .reduce(BigDecimal.ZERO, BigDecimal::add).divide(BigDecimal.valueOf(curses.size()), RoundingMode.CEILING);
     }
 }
