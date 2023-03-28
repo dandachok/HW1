@@ -18,7 +18,7 @@ public class CursReader {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy", new Locale("ru"));
 
     private final String SOURCE_FILE = "/dollar_evro_lira.csv";
-    List<Curs> read(int count, String cdx) throws RuntimeException {
+    List<Curs> read(int count, String cdx) {
         List<Curs> curses = new ArrayList<>();
         try (InputStream inputStream = getClass().getResourceAsStream(SOURCE_FILE);
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {

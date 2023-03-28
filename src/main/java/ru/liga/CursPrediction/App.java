@@ -1,7 +1,5 @@
 package ru.liga.CursPrediction;
 
-import lombok.val;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -14,15 +12,19 @@ public class App {
 
         terminal.printUsage();
 
-        while(true) {
+        try {
+            while(true) {
 
-            val command = terminal.getCommand();
-            if (command.isExit()) {
-                break;
+                Command command = terminal.getCommand();
+                if (command.isExit()) {
+                    break;
+                }
+                if (command.isCorrect()) {
+                    terminal.printPrediction(predictor.getPredict(command));
+                }
             }
-            if (command.isCorrect()) {
-                terminal.printPrediction(predictor.getPredict(command));
-            }
+        } catch (RuntimeException e) {
+            terminal.printError();
         }
 
     }

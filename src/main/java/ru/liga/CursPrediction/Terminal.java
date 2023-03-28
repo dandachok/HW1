@@ -68,4 +68,8 @@ public class Terminal {
             System.out.println(curs.getData().format(formatter) + " - " + curs.getCurs());
         }
     }
+
+    public void printError() {
+        System.out.println("Ошибка");
+    }
 }
