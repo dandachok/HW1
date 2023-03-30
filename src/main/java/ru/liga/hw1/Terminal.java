@@ -1,4 +1,4 @@
-package ru.liga.CursPrediction;
+package ru.liga.hw1;
 
 import lombok.val;
 

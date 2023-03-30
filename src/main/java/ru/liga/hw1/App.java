@@ -1,4 +1,4 @@
-package ru.liga.CursPrediction;
+package ru.liga.hw1;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
